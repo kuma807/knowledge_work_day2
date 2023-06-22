@@ -1,0 +1,6 @@
+digraph {
+	node [shape=circle]
+	1 -> 18
+	1 -> 19
+	19 -> 21
+}
