@@ -1,4 +1,4 @@
-package main
+package displayGoroutine
 
 import (
 	"os"
@@ -33,7 +33,7 @@ func make_tree(all_edges [][]string, all_nodes []string, tree_num int) {
     }
   }
   s := g.String()
-	file, err := os.Create("./" + strings.Split(string(os.Args[1]), ".")[0] + ".dot")
+	file, err := os.Create("graph/" + strings.Split(string(os.Args[1]), ".")[0] + ".dot")
 	if err != nil {
 		panic(err)
 	}
@@ -79,14 +79,3 @@ func main() {
   }
   make_tree(all_edges, all_nodes, 0)
 }
-// edges = []
-//   tree_num = 0
-//   for l in ls:
-//       l = l.replace('\n', '')
-//       if 'start' in l:
-//           edges = []
-//       elif 'end' in l:
-//           make_tree(edges, tree_num)
-//           tree_num += 1
-//       else:
-//           edges.append(list(l.split(' ')))
