@@ -33,6 +33,7 @@ func Watch(ctx context.Context, goroutineName string) {
   os.RemoveAll(folderName)
   creatFolder(folderName)
   f, _ := os.Create(folderName + "/tree_data.txt")
+  stackTraceByte := make([]byte, 4092)
   defer f.Close()
 	for {
 		select {
@@ -41,7 +42,6 @@ func Watch(ctx context.Context, goroutineName string) {
 			return
 		default:
       runtime.LockOSThread()
-			stackTraceByte := make([]byte, 1092)
 			length := runtime.Stack(stackTraceByte, true)
 			stackTrace := string(stackTraceByte[:length])
       // fmt.Printf(stackTrace)
@@ -86,6 +86,7 @@ func extractGoroutineData(stackStr string) (gs []goroutineData) {
 	parentReg := regexp.MustCompile(`goroutine\s(\d+)`)
 	var g goroutineData
 	for i, line := range lines {
+    fmt.Println(line)
 		matchChild := childReg.FindStringSubmatch(line)
 		if len(matchChild) > 1 {
 			number := matchChild[1]

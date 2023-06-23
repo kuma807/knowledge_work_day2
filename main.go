@@ -4,6 +4,7 @@ import (
 	"context"
 	"sync"
 	"time"
+	"fmt"
 
 	"github.com/kuma807/knowledge_work_day2/displayGoroutine"
 )
@@ -12,7 +13,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	go displayGoroutine.Watch(ctx, "testGoroutine")
 	time.Sleep(time.Second * 1)
-	numParentGoroutines := 1
+	numParentGoroutines := 2
 	var wg sync.WaitGroup
 
 	// ゴルーチンを発生させる
@@ -24,23 +25,37 @@ func main() {
 	time.Sleep(time.Second * 2)
 	cancel()
 	displayGoroutine.Show("testGoroutine")
-	time.Sleep(time.Second * 5)
 }
 
 func parent(wg *sync.WaitGroup) {
-	defer (*wg).Done()
+	defer wg.Done()
 	wg.Add(2)
 	go child1(wg)
 	go child2(wg)
-	time.Sleep(2 * time.Second)
+	time.Sleep(6 * time.Second)
 }
 
 func child1(wg *sync.WaitGroup) {
-	defer (*wg).Done()
+	defer wg.Done()
+	wg.Add(1)
+	go grandChild1(wg)
 	time.Sleep(5 * time.Second)
 }
 
 func child2(wg *sync.WaitGroup) {
-	defer (*wg).Done()
-	time.Sleep(6 * time.Second)
+	defer wg.Done()
+	time.Sleep(3 * time.Second)
+}
+
+func grandChild1(wg *sync.WaitGroup) {
+	defer wg.Done()
+	wg.Add(1)
+	go grandChild2(wg)
+	time.Sleep(2 * time.Second)
+}
+
+func grandChild2(wg *sync.WaitGroup) {
+	defer wg.Done()
+	fmt.Println("granc")
+	time.Sleep(1 * time.Second)
 }
