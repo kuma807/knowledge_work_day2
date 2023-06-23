@@ -19,13 +19,14 @@ type goroutineData struct {
 }
 
 func (g *goroutineData) toString() string {
-	return g.GoroutineId + " " + g.parentGoroutineId + "\n"
+	return g.GoroutineId + " " + g.parentGoroutineId + " " + g.GoroutineName + "\n"
 	// return g.GoroutineId + " " + g.parentGoroutineId + " " + g.GoroutineName + " " + g.createdLine + " " + g.currentLine + "/n"
 }
 
 //大文字でpub
 func Watch(ctx context.Context, goroutineName string) {
 	// 監視したいゴルーチンの処理
+  // runtime.GOMAXPROCS(1)
 	beforeStackTrace := ""
   fileName := getFileName()
   folderName := fileName + "_" + goroutineName
@@ -39,7 +40,8 @@ func Watch(ctx context.Context, goroutineName string) {
       // show(folderName + "/tree_data.txt")
 			return
 		default:
-			stackTraceByte := make([]byte, 8192)
+      runtime.LockOSThread()
+			stackTraceByte := make([]byte, 1092)
 			length := runtime.Stack(stackTraceByte, true)
 			stackTrace := string(stackTraceByte[:length])
       // fmt.Printf(stackTrace)
@@ -53,6 +55,7 @@ func Watch(ctx context.Context, goroutineName string) {
         }
 				f.WriteString("end\n")
 			}
+      runtime.UnlockOSThread()
 		}
 	}
 }
@@ -82,16 +85,22 @@ func extractGoroutineData(stackStr string) (gs []goroutineData) {
 	childReg := regexp.MustCompile(`goroutine\s(\d+)\s\[`)
 	parentReg := regexp.MustCompile(`goroutine\s(\d+)`)
 	var g goroutineData
-	for _, line := range lines {
+	for i, line := range lines {
 		matchChild := childReg.FindStringSubmatch(line)
 		if len(matchChild) > 1 {
 			number := matchChild[1]
 			g.GoroutineId = number
+      if number == "1" {
+        g.GoroutineName = "main"
+        g.parentGoroutineId = "-1"
+        gs = append(gs, g)
+      }
 		} else if strings.HasPrefix(line, "created by") {
 			matchParent := parentReg.FindStringSubmatch(line)
 			if len(matchParent) > 1 {
 				number := matchParent[1]
 				g.parentGoroutineId = number
+        g.GoroutineName = lines[i - 2]
 				gs = append(gs, g)
 				// fmt.Printf(g.toString())
 			}

@@ -1,0 +1,12 @@
+digraph G {
+	"main"->"github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0,";
+	"main"->"main.parent(0xc000012070)";
+	"main.parent(0xc000012070)"->"main.child1(0x0?)";
+	"main.parent(0xc000012070)"->"main.child2(0x0?)";
+	"github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0," [ fillcolor="#00FF00", style="solid,filled" ];
+	"main" [ fillcolor="#00FF00", style="solid,filled" ];
+	"main.child1(0x0?)" [ fillcolor="#00FF00", style="solid,filled" ];
+	"main.child2(0x0?)";
+	"main.parent(0xc000012070)";
+
+}

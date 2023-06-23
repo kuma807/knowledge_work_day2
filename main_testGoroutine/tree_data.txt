@@ -1,22 +1,35 @@
 start
-18 1
-19 1
-20 19
-21 19
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
 end
 start
-18 1
-19 1
-20 19
-21 19
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
 end
 start
-18 1
-19 1
-21 19
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
+9 1 main.parent(0xc000012070)
 end
 start
-18 1
-19 1
-21 19
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
+10 9 main.child1(0x0?)
+end
+start
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
+11 9 main.child2(0x0?)
+end
+start
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
+end
+start
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
+end
+start
+18 1 github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11631f0, 0xc0000d6280}, {0x1132cd5, 0xd})
+1 -1 main
 end

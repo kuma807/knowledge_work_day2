@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"strings"
 	"strconv"
 
@@ -67,13 +68,26 @@ func Show(goroutineName string) {
 	all_edges := [][]string{}
 	all_nodes := []string{}
 	already_found_node := map[string]bool{}
-	already_found_edge := map[string]bool{}
-	fmt.Printf("hi")
+	node_name := map[string]string{}
+	node_name["1"] = "main"
+	node_name["-1"] = "-1"
 	for _, line := range lines {
 		line = strings.Replace(line, "\n", "", -1)
 		if !strings.HasPrefix(line, "start") && !strings.HasPrefix(line, "end") && len(line) != 0 {
 			child := strings.Split(line, " ")[0]
-			parent := strings.Split(line, " ")[1]
+			childName := strings.Split(line, " ")[2]
+			node_name[child] = "\"" + childName + "\""
+		}
+	}
+	already_found_edge := map[string]bool{}
+	for _, line := range lines {
+		line = strings.Replace(line, "\n", "", -1)
+		if !strings.HasPrefix(line, "start") && !strings.HasPrefix(line, "end") && len(line) != 0 {
+			child := node_name[strings.Split(line, " ")[0]]
+			parent := node_name[strings.Split(line, " ")[1]]
+			if parent == "-1" {
+				continue
+			}
 			edge := []string{parent, child}
 			key := parent + "$" + child
 			// _, found := already_found_edge[key]
@@ -98,15 +112,34 @@ func Show(goroutineName string) {
 		if strings.HasPrefix(line, "start") {
 			active_nodes = []string{}
 		} else if strings.HasPrefix(line, "end") {
-			make_tree(all_edges, all_nodes, active_nodes, folderName + "/tree" + strconv.Itoa(treeCnt))
+			make_tree(all_edges, all_nodes, active_nodes, folderName + "/tree_" + strconv.Itoa(treeCnt))
+			makePNG(folderName + "/tree_" + strconv.Itoa(treeCnt))
 			treeCnt += 1
 		} else if len(line) != 0 {
-			child := strings.Split(line, " ")[0]
+			child := node_name[strings.Split(line, " ")[0]]
 			active_nodes = append(active_nodes, child)
 		}
 	}
+	makeMP4(folderName)
 }
 
+func makePNG(treeName string) {
+	 exec.Command("dot", "-T", "png", treeName + ".dot", "-o", treeName + ".png").CombinedOutput()
+}
+
+func makeMP4(folderName string) {
+	fmt.Println("hi")
+	fmt.Println("ffmpeg", "-r", "1", "-i", folderName + "/tree_%01d.png", "-vcodec", "libx264", "-pix_fmt", "yuv420p", "-vf", "\"scale=trunc(iw/2)*2:trunc(ih/2)*2\"", folderName + "/trees.mp4")
+	ls, err := exec.Command("ffmpeg", "-r", "1", "-i", folderName + "/tree_%01d.png", "-vcodec", "libx264", "-pix_fmt", "yuv420p", "-vf", `\"scale=trunc(iw/2)*2:trunc(ih/2)*2\"`, folderName + "/trees.mp4").CombinedOutput()
+	// ls, err := exec.Command("ffmpeg -r 1 -i " + folderName + "/tree_%01d.png -vcodec libx264 -pix_fmt yuv420p -vf \"scale=trunc(iw/2)*2:trunc(ih/2)*2\" " + folderName + "/trees.mp4").CombinedOutput()
+	// ls, err := exec.Command("ffmpeg -r 1 -i " + folderName + "/tree_%01d.png -vcodec libx264 -pix_fmt yuv420p -vf \"scale=trunc(iw/2)*2:trunc(ih/2)*2\" ./" + folderName + "/trees.mp4").CombinedOutput()
+	fmt.Println("%s", string(ls))
+	if err != nil {
+		fmt.Println("%s", err)
+	}
+}
+// ffmpeg -r 1 -i main_testGoroutine/tree_%01d.png -vcodec libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" main_testGoroutine/trees.mp4
+// ffmpeg -r 1 -i main_testGoroutine/tree_%01d.png -vcodec libx264 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" main_testGoroutine/trees.mp4
 // func main() {
 // 	fileName := os.Args[1]
 // 	f, err := os.Open(fileName)

@@ -11,7 +11,7 @@ import (
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	go displayGoroutine.Watch(ctx, "testGoroutine")
-
+	time.Sleep(time.Second * 1)
 	numParentGoroutines := 1
 	var wg sync.WaitGroup
 
@@ -21,9 +21,10 @@ func main() {
 		go parent(&wg)
 	}
 	wg.Wait()
+	time.Sleep(time.Second * 2)
 	cancel()
 	displayGoroutine.Show("testGoroutine")
-	time.Sleep(time.Second * 4)
+	time.Sleep(time.Second * 5)
 }
 
 func parent(wg *sync.WaitGroup) {
@@ -36,10 +37,10 @@ func parent(wg *sync.WaitGroup) {
 
 func child1(wg *sync.WaitGroup) {
 	defer (*wg).Done()
-	time.Sleep(1 * time.Second)
+	time.Sleep(5 * time.Second)
 }
 
 func child2(wg *sync.WaitGroup) {
 	defer (*wg).Done()
-	time.Sleep(2 * time.Second)
+	time.Sleep(6 * time.Second)
 }
