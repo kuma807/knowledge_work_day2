@@ -145,52 +145,5 @@ func makePNG(treeName string) {
 }
 
 func makeMP4(folderName string) {
-	fmt.Println("hi")
-	// fmt.Println("ffmpeg", "-r", "1", "-i", folderName + "/tree_%01d.png", "-vcodec", "libx264", "-pix_fmt", "yuv420p", "-vf", "\"scale=trunc(iw/2)*2:trunc(ih/2)*2\"", folderName + "/trees.mp4")
-	// ls, err := exec.Command("ffmpeg", "-r", "1", "-i", folderName + "/tree_%01d.png", "-vcodec", "libx264", "-pix_fmt", "yuv420p", "-vf", `\"scale=trunc(iw/2)*2:trunc(ih/2)*2\"`, folderName + "/trees.mp4").CombinedOutput()
-	// // ls, err := exec.Command("ffmpeg -r 1 -i " + folderName + "/tree_%01d.png -vcodec libx264 -pix_fmt yuv420p -vf \"scale=trunc(iw/2)*2:trunc(ih/2)*2\" " + folderName + "/trees.mp4").CombinedOutput()
-	// // ls, err := exec.Command("ffmpeg -r 1 -i " + folderName + "/tree_%01d.png -vcodec libx264 -pix_fmt yuv420p -vf \"scale=trunc(iw/2)*2:trunc(ih/2)*2\" ./" + folderName + "/trees.mp4").CombinedOutput()
-	// fmt.Println("%s", string(ls))
-	// if err != nil {
-	// 	fmt.Println("%s", err)
-	// }
+	exec.Command("ffmpeg", "-r", "1", "-i", folderName + "/tree_%01d.png", "-vcodec", "libx264", "-pix_fmt", "yuv420p", "-vf", "scale=900:200", folderName + "/trees.mp4").CombinedOutput()
 }
-
-// func main() {
-// 	fileName := os.Args[1]
-// 	f, err := os.Open(fileName)
-// 	// 読み取り時の例外処理
-// 	if err != nil {
-// 		fmt.Println("error reading file: " + fileName)
-// 	}
-// 	file_data, err := ioutil.ReadAll(f)
-// 	lines := strings.Split(string(file_data), "\n")
-// 	defer f.Close()
-// 	all_edges := [][]string{}
-// 	all_nodes := []string{}
-// 	already_found_node := map[string]bool{}
-// 	already_found_edge := map[string]bool{}
-// 	for _, line := range lines {
-// 		line = strings.Replace(line, "\n", "", -1)
-// 		if !strings.HasPrefix(line, "start") && !strings.HasPrefix(line, "end") && len(line) != 0 {
-// 			child := strings.Split(line, " ")[0]
-// 			parent := strings.Split(line, " ")[1]
-// 			edge := []string{parent, child}
-// 			key := parent + "$" + child
-// 			// _, found := already_found_edge[key]
-// 			if _, found := already_found_edge[key]; !found {
-// 				all_edges = append(all_edges, edge)
-// 				already_found_edge[key] = true
-// 			}
-// 			if _, found := already_found_node[child]; !found {
-// 				all_nodes = append(all_nodes, child)
-// 				already_found_node[child] = true
-// 			}
-// 			if _, found := already_found_node[parent]; !found {
-// 				all_nodes = append(all_nodes, parent)
-// 				already_found_node[parent] = true
-// 			}
-// 		}
-// 	}
-// 	// make_tree(all_edges, all_nodes, 0)
-// }

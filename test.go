@@ -1,15 +1,7 @@
-package main
-
-import (
-  "runtime"
-  "path/filepath"
-)
-
+import "github.com/kuma807/knowledge_work_day2/displayGoroutine"
 func main() {
-    _, file, _, _ := runtime.Caller(0)
-    fileName := filepath.Base(file)
-
-  	// 拡張子を除いた部分だけを取り出す
-  	fileNameWithoutExt := fileName[:len(fileName)-len(filepath.Ext(fileName))]
-    println(fileNameWithoutExt)
+	ctx, cancel := context.WithCancel(context.Background())
+	go displayGoroutine.Watch(ctx, "testGoroutine")
+	//監視したいゴールーチンをここに書く
+	displayGoroutine.Show("testGoroutine")
 }

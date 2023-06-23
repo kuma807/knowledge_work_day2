@@ -76,7 +76,6 @@ func creatFolder(folderName string) {
 			return
 		}
 
-		fmt.Println("フォルダが作成されました")
 	}
 }
 
@@ -86,7 +85,6 @@ func extractGoroutineData(stackStr string) (gs []goroutineData) {
 	parentReg := regexp.MustCompile(`goroutine\s(\d+)`)
 	var g goroutineData
 	for i, line := range lines {
-    fmt.Println(line)
 		matchChild := childReg.FindStringSubmatch(line)
 		if len(matchChild) > 1 {
 			number := matchChild[1]

@@ -1,26 +1,12 @@
 digraph G {
-	"main_1"->"github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11633f0,_6";
-	"main_1"->"main.parent(0xc000012090)_9";
-	"main_1"->"main.parent(0xc000012090)_10";
-	"main.parent(0xc000012090)_10"->"main.child1(0xc000012090)_11";
-	"main.parent(0xc000012090)_10"->"main.child2(0x0?)_12";
-	"main.parent(0xc000012090)_9"->"main.child1(0xc000012090)_13";
-	"main.parent(0xc000012090)_9"->"main.child2(0x0?)_14";
-	"main.child1(0xc000012090)_11"->"main.grandChild1(0xc000012090)_15";
-	"main.grandChild1(0xc000012090)_15"->"main.grandChild2(0x0?)_16";
-	"main.child1(0xc000012090)_13"->"main.grandChild1(0xc000012090)_21";
-	"main.grandChild1(0xc000012090)_21"->"main.grandChild2(0x0?)_22";
-	"github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11633f0,_6" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.child1(0xc000012090)_11" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.child1(0xc000012090)_13" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.child2(0x0?)_12" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.child2(0x0?)_14" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.grandChild1(0xc000012090)_15" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.grandChild1(0xc000012090)_21" [ fillcolor="#999999", style="solid,filled" ];
-	"main.grandChild2(0x0?)_16" [ fillcolor="#999999", style="solid,filled" ];
-	"main.grandChild2(0x0?)_22" [ fillcolor="#999999", style="solid,filled" ];
-	"main.parent(0xc000012090)_10" [ fillcolor="#00FF00", style="solid,filled" ];
-	"main.parent(0xc000012090)_9" [ fillcolor="#00FF00", style="solid,filled" ];
+	"main_1"->"github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11630f0,_18";
+	"main_1"->"main.parent(0xc000012070)_49";
+	"main.parent(0xc000012070)_49"->"main.child1(0x0?)_5";
+	"main.parent(0xc000012070)_49"->"main.child2(0x0?)_6";
+	"github.com/kuma807/knowledge_work_day2/displayGoroutine.Watch({0x11630f0,_18" [ fillcolor="#00FF00", style="solid,filled" ];
+	"main.child1(0x0?)_5" [ fillcolor="#999999", style="solid,filled" ];
+	"main.child2(0x0?)_6" [ fillcolor="#00FF00", style="solid,filled" ];
+	"main.parent(0xc000012070)_49" [ fillcolor="#999999", style="solid,filled" ];
 	"main_1" [ fillcolor="#00FF00", style="solid,filled" ];
 
 }
