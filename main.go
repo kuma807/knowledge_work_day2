@@ -4,11 +4,13 @@ import (
 	"context"
 	"sync"
 	"time"
+
+	"github.com/kuma807/knowledge_work_day2/displayGoroutine"
 )
 
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
-	go displayGoroutine.watchGoroutine(ctx)
+	go displayGoroutine.Watch(ctx, "testGoroutine")
 
 	numParentGoroutines := 1
 	var wg sync.WaitGroup
@@ -20,6 +22,8 @@ func main() {
 	}
 	wg.Wait()
 	cancel()
+	displayGoroutine.Show("testGoroutine")
+	time.Sleep(time.Second * 4)
 }
 
 func parent(wg *sync.WaitGroup) {
